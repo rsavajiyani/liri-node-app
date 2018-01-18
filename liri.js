@@ -37,10 +37,8 @@ var getMusic = function(songName) {
             console.log('song name: ' + songs[i].name);
             console.log('preview: ' + songs[i].preview_url);
             console.log('album: ' + songs[i].album.name);
-            console.log('*********')
+            console.log('*********************')
         }
-
-        console.log(data.tracks.items[0]);
     });
 }
 
