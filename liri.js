@@ -1,7 +1,7 @@
 require("dotenv").config();
 const keys = require('./keys.js');
 const Twitter = require('twitter');
-const Spotify = require('spotify');
+const Spotify = require('node-spotify-api');
 const request = require('request');
 const fs = require('fs');
 
@@ -11,7 +11,6 @@ const client = new Twitter(keys.twitter);
 
 
 var tweets = function() {
-
     var params = { screen_name: 'testbot35001' };
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
         if (!error) {
@@ -82,16 +81,16 @@ var doWhatItSays = function() {
         });
     }
 
-var userChoice = function(caseData, functionData) {
-    switch (caseData) {
+var userChoice = function(choice, data) {
+    switch (choice) {
         case 'my-tweets':
             tweets();
             break;
         case 'spotify-this-song':
-            getMusic(functionData);
+            getMusic(data);
             break;
         case 'movie-this':
-            getMovie(functionData);
+            getMovie(data);
             break;
         case 'do-what-it-says':
         	doWhatItSays();
