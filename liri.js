@@ -14,7 +14,6 @@ var tweets = function() {
     var params = { screen_name: 'testbot35001' };
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
         if (!error) {
-            console.log(tweets);
             for (var i = 0; i < tweets.length; i++) {
                 console.log(tweets[i].created_at);
                 console.log(' ');
@@ -24,8 +23,9 @@ var tweets = function() {
     });
 }
 
-var getMusic = function(songName) {
-    spotify.search({ type: 'track', query: 'dancing in the moonlight' }, function(err, data) {
+var getMusic = function(song) {
+    if (!song) song = "The Sign Ace of Base";
+    spotify.search({ type: 'track', query: song }, function(err, data) {
         if (err) {
             console.log('Error occurred: ' + err);
             return;
@@ -47,6 +47,7 @@ var artistName = function(artist) {
 }
 
 var getMovie = function(movieName) {
+    if (!movieName) movieName = "Mr. Nobody";
 
     request('http://www.omdbapi.com/?t=' + movieName + '&r=json&apikey=trilogy', function(error, response, body) {
         // console.log('error:', error); // Print the error if one occurred
@@ -68,16 +69,16 @@ var getMovie = function(movieName) {
 
 var doWhatItSays = function() {
     fs.readFile('random.txt', 'utf8', function(err, data) {
-            if (err) throw err;
+        if (err) throw err;
 
-            var dataArr = data.split(',');
-            if (dataArr.length == 2) {
-                userChoice(dataArr[0], dataArr[1]);
-            } else if (dataArr.length == 1) {
-                userChoice(dataArr[0]);
-            }
-        });
-    }
+        var dataArr = data.split(',');
+        if (dataArr.length == 2) {
+            userChoice(dataArr[0], dataArr[1]);
+        } else if (dataArr.length == 1) {
+            userChoice(dataArr[0]);
+        }
+    });
+}
 
 var userChoice = function(choice, data) {
     switch (choice) {
@@ -91,7 +92,7 @@ var userChoice = function(choice, data) {
             getMovie(data);
             break;
         case 'do-what-it-says':
-        	doWhatItSays();
+            doWhatItSays();
         default:
             console.log('LIRI is unable to do that');
     }
