@@ -21,6 +21,7 @@ var userChoice = function(choice, data) {
             break;
         case 'do-what-it-says':
             doWhatItSays();
+            break;
         default:
             console.log('LIRI is unable to do that');
     }
