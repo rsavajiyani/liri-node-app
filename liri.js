@@ -8,7 +8,23 @@ const fs = require('fs');
 const spotify = new Spotify(keys.spotify);
 const client = new Twitter(keys.twitter);
 
-
+var userChoice = function(choice, data) {
+    switch (choice) {
+        case 'my-tweets':
+            tweets();
+            break;
+        case 'spotify-this-song':
+            getMusic(data);
+            break;
+        case 'movie-this':
+            getMovie(data);
+            break;
+        case 'do-what-it-says':
+            doWhatItSays();
+        default:
+            console.log('LIRI is unable to do that');
+    }
+}
 
 var tweets = function() {
     var params = { screen_name: 'testbot35001' };
@@ -50,10 +66,8 @@ var getMovie = function(movieName) {
     if (!movieName) movieName = "Mr. Nobody";
 
     request('http://www.omdbapi.com/?t=' + movieName + '&r=json&apikey=trilogy', function(error, response, body) {
-        // console.log('error:', error); // Print the error if one occurred
-        // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-        // console.log('body:', body); // Print the HTML for the Google homepage.
         var movieData = JSON.parse(body);
+        // console.log(JSON.stringify(movieData, null, 2));
 
         console.log('Title: ' + movieData.Title);
         console.log('Year: ' + movieData.Year);
@@ -62,6 +76,9 @@ var getMovie = function(movieName) {
         console.log('Language: ' + movieData.Language);
         console.log('Plot: ' + movieData.Plot);
         console.log('Actors: ' + movieData.Actors);
+        console.log('IMDB Rating: ' + movieData.Ratings[0].Value);
+        console.log('RT Rating: ' + movieData.Ratings[1].Value);
+        
 
 
     });
@@ -80,23 +97,7 @@ var doWhatItSays = function() {
     });
 }
 
-var userChoice = function(choice, data) {
-    switch (choice) {
-        case 'my-tweets':
-            tweets();
-            break;
-        case 'spotify-this-song':
-            getMusic(data);
-            break;
-        case 'movie-this':
-            getMovie(data);
-            break;
-        case 'do-what-it-says':
-            doWhatItSays();
-        default:
-            console.log('LIRI is unable to do that');
-    }
-}
+
 
 var run = function(argOne, argTwo) {
     userChoice(argOne, argTwo);
