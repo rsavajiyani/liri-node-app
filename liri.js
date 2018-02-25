@@ -68,6 +68,7 @@ var getMovie = function(movieName) {
 
     request('http://www.omdbapi.com/?t=' + movieName + '&r=json&apikey=trilogy', function(error, response, body) {
         var movieData = JSON.parse(body);
+        // console.log(movieData);
         // console.log(JSON.stringify(movieData, null, 2));
 
         console.log('Title: ' + movieData.Title);
